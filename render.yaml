@@ -1,0 +1,47 @@
+# Render Blueprint — Thả Thính backend (staging).
+# Import at https://dashboard.render.com → New → Blueprint → chọn repo này.
+# Các biến "sync: false" sẽ được nhập thủ công (secret) trong dashboard.
+services:
+  - type: web
+    name: thathinh-backend-staging
+    runtime: docker
+    plan: free
+    region: singapore
+    branch: develop
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      # Staging: bỏ xác thực email + không bắt buộc S3 cho tiện thử nghiệm.
+      - key: EMAIL_VERIFICATION_REQUIRED
+        value: "false"
+      - key: AWS_S3_REQUIRED
+        value: "false"
+      - key: REDIS_ENABLED
+        value: "false"
+      - key: MONGODB_DATABASE
+        value: thathinhdb
+      # --- Secrets: nhập trong dashboard ---
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: CORS_ORIGIN_0
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      # --- S3 (tùy chọn; cần cho tính năng gửi ảnh) ---
+      - key: AWS_S3_BUCKET
+        sync: false
+      - key: AWS_S3_REGION
+        sync: false
+      - key: AWS_S3_PUBLIC_URL_BASE
+        sync: false
+      - key: AWS_ACCESS_KEY
+        sync: false
+      - key: AWS_SECRET_KEY
+        sync: false
