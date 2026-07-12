@@ -104,6 +104,12 @@ public class AuthService {
                     .or(() -> userRepository.findByEmailAndDeletedFalse(email))
                     .orElseGet(() -> {
                         String baseNick = email.split("@")[0].replaceAll("[^a-zA-Z0-9_]", "");
+                        if (baseNick.length() < 3) {
+                            baseNick = "user" + googleId.substring(0, Math.min(8, googleId.length()));
+                        }
+                        if (baseNick.length() > 20) {
+                            baseNick = baseNick.substring(0, 20);
+                        }
                         String nick = baseNick;
                         int i = 1;
                         while (userRepository.existsByNicknameAndDeletedFalse(nick)) {

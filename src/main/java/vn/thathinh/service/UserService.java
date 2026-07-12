@@ -42,7 +42,17 @@ public class UserService {
             validateMinimumAge(request.getBirthDate());
             user.setBirthDate(request.getBirthDate());
         }
-        if (request.getPreferences() != null) user.setPreferences(request.getPreferences());
+        if (request.getPreferences() != null) {
+            var prefs = request.getPreferences();
+            int min = prefs.getMinAge();
+            int max = prefs.getMaxAge();
+            if (min < 18) min = 18;
+            if (max < min) max = min;
+            if (max > 99) max = 99;
+            prefs.setMinAge(min);
+            prefs.setMaxAge(max);
+            user.setPreferences(prefs);
+        }
         if (request.getBio() != null) {
             String trimmed = request.getBio().trim();
             user.setBio(trimmed.isEmpty() ? null : trimmed);
