@@ -49,8 +49,9 @@ Spring Boot + MongoDB, đóng gói bằng `Dockerfile`. Staging deploy từ nhá
 `AWS_SECRET_KEY` — khi đó đặt `AWS_S3_REQUIRED=true`.
 
 ### Khác (tùy chọn)
-`GOOGLE_CLIENT_ID` (đăng nhập Google), `ADMIN_SEED_ENABLED=true` +
-`ADMIN_EMAIL`/`ADMIN_PASSWORD` (tạo admin lần đầu),
+`GOOGLE_CLIENT_ID` — **cùng Client ID** với `VITE_APP_GOOGLE_CLIENT_ID` trên Vercel. Cấu hình origin trên Google Cloud: xem `thathinh-web/docs/DEPLOY-STAGING.md` mục 5.
+
+`ADMIN_SEED_ENABLED=true` + `ADMIN_EMAIL`/`ADMIN_PASSWORD` (tạo admin lần đầu),
 `MAIL_HOST`/`MAIL_PORT`/`MAIL_USERNAME`/`MAIL_PASSWORD` (gửi email thật).
 
 ## 3. Kiểm tra sau deploy
