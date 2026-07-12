@@ -34,7 +34,8 @@ Spring Boot + MongoDB, đóng gói bằng `Dockerfile`. Staging deploy từ nhá
 | `MONGODB_DATABASE` | `thathinhdb` | Đã set sẵn |
 | `JWT_SECRET` | *(chuỗi ≥ 32 ký tự)* | Bí mật, sinh ngẫu nhiên |
 | `FRONTEND_URL` | `https://<fe-staging>.vercel.app` | Link trong email |
-| `CORS_ORIGIN_0` | `https://<fe-staging>.vercel.app` | Cho phép FE gọi API |
+| `CORS_ORIGIN_0` | `https://<fe-staging>.vercel.app` | Domain FE chính (production trên Vercel) |
+| `CORS_ORIGIN_2` | `https://*.vercel.app` | Cho phép mọi preview URL Vercel (đã set mặc định trong `render.yaml`) |
 
 ### Tùy chọn (đã đặt mặc định tiện cho staging trong `render.yaml`)
 | Key | Mặc định | Ghi chú |

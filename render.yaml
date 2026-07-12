@@ -32,6 +32,8 @@ services:
         sync: false
       - key: CORS_ORIGIN_0
         sync: false
+      - key: CORS_ORIGIN_2
+        value: "https://*.vercel.app"
       - key: GOOGLE_CLIENT_ID
         sync: false
       # --- S3 (tùy chọn; cần cho tính năng gửi ảnh) ---
