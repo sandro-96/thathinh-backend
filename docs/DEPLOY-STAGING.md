@@ -60,7 +60,19 @@ Spring Boot + MongoDB, đóng gói bằng `Dockerfile`. Staging deploy từ nhá
 - [ ] WebSocket `/ws` handshake OK.
 - [ ] Cập nhật `VITE_API_BASE_URL`/`VITE_WS_URL` bên Vercel = domain Render rồi redeploy FE.
 
-## 4. Lưu ý bảo mật
+## 4. Lỗi MongoDB SSL (`fatal alert: internal_error`)
+
+Nếu log có `SSLException: internal_error` khi kết nối `*.mongodb.net`:
+
+1. **`MONGODB_URI` phải là `mongodb+srv://`** — copy lại từ Atlas → Connect → Drivers → Java.
+   - Đúng: `mongodb+srv://user:pass@cluster.ivjolis.mongodb.net/thathinhdb?retryWrites=true&w=majority`
+   - Sai: `mongodb://ac-xxx-shard-00-00...:27017` (connection string thường, dễ lỗi TLS trên cloud)
+2. **Password có ký tự đặc biệt** (`@`, `#`, `%`, `:`…) → [URL-encode](https://www.urlencoder.org/) trước khi dán vào Render.
+3. **Không bọc URI bằng dấu ngoặc kép** trong Render Variables (`mongodb+srv://...` thuần, không `"..."`).
+4. **Atlas → Network Access** → `0.0.0.0/0` (Allow from anywhere).
+5. Sau khi đổi `Dockerfile`, trên Render: **Manual Deploy → Clear build cache** rồi deploy lại.
+
+## 5. Lưu ý bảo mật
 
 - Không commit secrets — chỉ đặt ở Render (`.env` đã trong `.gitignore`).
 - `JWT_SECRET` staging khác production.
