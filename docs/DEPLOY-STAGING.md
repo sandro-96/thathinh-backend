@@ -30,7 +30,7 @@ Spring Boot + MongoDB, đóng gói bằng `Dockerfile`. Staging deploy từ nhá
 | Key | Giá trị staging | Ghi chú |
 |-----|-----------------|---------|
 | `SPRING_PROFILES_ACTIVE` | `prod` | Đã set sẵn trong `render.yaml` |
-| `MONGODB_URI` | `mongodb+srv://…` | URI bạn đã có. **Atlas → Network Access → Allow `0.0.0.0/0`** (Render IP động) |
+| `MONGODB_URI` | `mongodb+srv://…` | URI bạn đã có. **Atlas → Network Access → Allow `0.0.0.0/0`**. Dùng `mongodb+srv://` (TLS). |
 | `MONGODB_DATABASE` | `thathinhdb` | Đã set sẵn |
 | `JWT_SECRET` | *(chuỗi ≥ 32 ký tự)* | Bí mật, sinh ngẫu nhiên |
 | `FRONTEND_URL` | `https://<fe-staging>.vercel.app` | Link trong email |
