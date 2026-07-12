@@ -30,7 +30,7 @@ Spring Boot + MongoDB, đóng gói bằng `Dockerfile`. Staging deploy từ nhá
 | Key | Giá trị staging | Ghi chú |
 |-----|-----------------|---------|
 | `SPRING_PROFILES_ACTIVE` | `prod` | Đã set sẵn trong `render.yaml` |
-| `MONGODB_URI` | `mongodb+srv://…` | URI bạn đã có |
+| `MONGODB_URI` | `mongodb+srv://…` | URI bạn đã có. **Atlas → Network Access → Allow `0.0.0.0/0`** (Render IP động) |
 | `MONGODB_DATABASE` | `thathinhdb` | Đã set sẵn |
 | `JWT_SECRET` | *(chuỗi ≥ 32 ký tự)* | Bí mật, sinh ngẫu nhiên |
 | `FRONTEND_URL` | `https://<fe-staging>.vercel.app` | Link trong email |
@@ -42,6 +42,7 @@ Spring Boot + MongoDB, đóng gói bằng `Dockerfile`. Staging deploy từ nhá
 | `EMAIL_VERIFICATION_REQUIRED` | `false` | Bỏ bước xác thực email |
 | `AWS_S3_REQUIRED` | `false` | Không có S3 vẫn chạy; gửi ảnh sẽ báo lỗi/nhẹ nhàng fallback avatar |
 | `REDIS_ENABLED` | `false` | Chạy in-memory (1 instance) |
+| `MAIL_HEALTH_ENABLED` | `false` | Tắt mail health khi chưa cấu hình SMTP (mặc định đã tắt) |
 
 ### S3 (chỉ cần nếu muốn bật gửi ảnh)
 `AWS_S3_BUCKET`, `AWS_S3_REGION`, `AWS_S3_PUBLIC_URL_BASE`, `AWS_ACCESS_KEY`,
