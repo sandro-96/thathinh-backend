@@ -1,6 +1,7 @@
 # Deploy Production — Backend
 
-Hướng dẫn đầy đủ (shared EC2 với salsales, SSM, CI/CD): repo **`sandro-96/thathinh-web`** → `docs/DEPLOY-PRODUCTION.md`
+> **⏸ CHỜ MUA DOMAIN** — Hướng dẫn đầy đủ từng bước: repo **`sandro-96/thathinh-web`** → [`docs/DEPLOY-PRODUCTION.md`](../thathinh-web/docs/DEPLOY-PRODUCTION.md)  
+> Sau khi mua domain, mở file đó và làm từ **Bước 0**.
 
 ## File ops trong repo này
 
