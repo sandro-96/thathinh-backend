@@ -1,0 +1,25 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:GetObject"],
+      "Resource": "arn:aws:s3:::thathinh-deploy-prod/backend/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["s3:PutObject", "s3:GetObject", "s3:DeleteObject", "s3:ListBucket"],
+      "Resource": [
+        "arn:aws:s3:::thathinh-assets",
+        "arn:aws:s3:::thathinh-assets/*",
+        "arn:aws:s3:::thathinh-backup-prod",
+        "arn:aws:s3:::thathinh-backup-prod/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["ssm:GetParametersByPath", "ssm:GetParameter", "ssm:GetParameters"],
+      "Resource": "arn:aws:ssm:ap-southeast-1:336457598093:parameter/thathinh/prod/*"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ThathinhFrontendS3",
+      "Effect": "Allow",
+      "Action": ["s3:PutObject", "s3:DeleteObject", "s3:ListBucket", "s3:GetObject"],
+      "Resource": [
+        "arn:aws:s3:::thathinh-web-prod",
+        "arn:aws:s3:::thathinh-web-prod/*"
+      ]
+    },
+    {
+      "Sid": "ThathinhDeployArtifacts",
+      "Effect": "Allow",
+      "Action": ["s3:PutObject", "s3:ListBucket"],
+      "Resource": [
+        "arn:aws:s3:::thathinh-deploy-prod",
+        "arn:aws:s3:::thathinh-deploy-prod/*"
+      ]
+    },
+    {
+      "Sid": "ThathinhCloudFrontInvalidate",
+      "Effect": "Allow",
+      "Action": ["cloudfront:CreateInvalidation", "cloudfront:GetInvalidation"],
+      "Resource": "arn:aws:cloudfront::336457598093:distribution/THATHINH_CF_DIST_ID"
+    }
+  ]
+}
