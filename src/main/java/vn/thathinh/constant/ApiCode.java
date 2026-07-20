@@ -60,6 +60,8 @@ public enum ApiCode {
     CONVERSATION_NOT_FOUND("4700", "Không tìm thấy cuộc trò chuyện"),
     CONVERSATION_NOT_PARTICIPANT("4701", "Bạn không tham gia cuộc trò chuyện này"),
 
+    LOCATION_NOT_ENABLED("4800", "Vui lòng bật chia sẻ vị trí để tìm quanh đây"),
+
     INTERNAL_ERROR("5000", "Lỗi hệ thống");
 
     private final String code;

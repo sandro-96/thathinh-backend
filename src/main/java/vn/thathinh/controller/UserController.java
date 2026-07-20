@@ -46,6 +46,34 @@ public class UserController {
         return ApiResponseDto.success(ApiCode.SUCCESS, userService.uploadAvatar(user.getUserId(), file));
     }
 
+    @GetMapping("/avatar-presets")
+    public ApiResponseDto<java.util.List<vn.thathinh.service.AvatarService.AvatarPreset>> avatarPresets(
+            @AuthenticationPrincipal CustomUserDetails user) {
+        return ApiResponseDto.success(ApiCode.SUCCESS, userService.avatarPresets(user.getUserId()));
+    }
+
+    @PostMapping("/me/avatar/preset")
+    public ApiResponseDto<UserProfileResponse> chooseAvatarPreset(
+            @AuthenticationPrincipal CustomUserDetails user,
+            @RequestBody @Valid vn.thathinh.dto.AvatarPresetRequest request) {
+        return ApiResponseDto.success(ApiCode.SUCCESS,
+                userService.chooseAvatarPreset(user.getUserId(), request.getSeed()));
+    }
+
+    @PutMapping("/me/location")
+    public ApiResponseDto<UserProfileResponse> updateLocation(
+            @AuthenticationPrincipal CustomUserDetails user,
+            @RequestBody @Valid vn.thathinh.dto.UpdateLocationRequest request) {
+        return ApiResponseDto.success(ApiCode.SUCCESS,
+                userService.updateLocation(user.getUserId(), request));
+    }
+
+    @DeleteMapping("/me/location")
+    public ApiResponseDto<UserProfileResponse> disableLocation(
+            @AuthenticationPrincipal CustomUserDetails user) {
+        return ApiResponseDto.success(ApiCode.SUCCESS, userService.disableLocation(user.getUserId()));
+    }
+
     @PostMapping("/me/photos")
     public ApiResponseDto<UserProfileResponse> addPhoto(
             @AuthenticationPrincipal CustomUserDetails user,

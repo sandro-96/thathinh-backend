@@ -141,7 +141,11 @@ public class FriendService {
         Conversation conversation = getOrReviveConversation(
                 friendship.getUserLowId(), friendship.getUserHighId(), friendship.getSourceSessionId());
 
-        conversationServiceImportFlirtHistory(conversation, userId);
+        // Chỉ import lịch sử flirt khi lời mời phát sinh từ phiên thả thính. Lời mời trực tiếp
+        // (vd. từ "Quanh đây") không có sourceSessionId nên bỏ qua để không lỗi.
+        if (conversation.getSourceSessionId() != null && !conversation.getSourceSessionId().isBlank()) {
+            conversationServiceImportFlirtHistory(conversation, userId);
+        }
 
         Conversation freshConversation = conversationRepository.findById(conversation.getId()).orElse(conversation);
         ConversationResponse convResponse = toConversationResponse(freshConversation, userId);

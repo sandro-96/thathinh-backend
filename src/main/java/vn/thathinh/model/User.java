@@ -3,6 +3,9 @@ package vn.thathinh.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import vn.thathinh.constant.AdminPermission;
@@ -78,6 +81,16 @@ public class User extends BaseEntity {
 
     @Indexed(unique = true, sparse = true)
     private String googleId;
+
+    /** Vị trí GeoJSON [lng, lat] để tìm người quanh đây (2dsphere). Null nếu chưa bật. */
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+    private GeoJsonPoint location;
+
+    /** Người dùng có bật chia sẻ vị trí (opt-in) hay không. */
+    @Builder.Default
+    private boolean locationEnabled = false;
+
+    private Instant locationUpdatedAt;
 
     public int getAge() {
         if (birthDate == null) return 0;

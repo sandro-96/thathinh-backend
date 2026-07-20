@@ -34,6 +34,7 @@ public class AuthService {
     private final TokenService tokenService;
     private final NicknameValidator nicknameValidator;
     private final EmailService emailService;
+    private final AvatarService avatarService;
 
     @Value("${app.google.client-id:}")
     private String googleClientId;
@@ -59,6 +60,7 @@ public class AuthService {
                 .nickname(request.getNickname().trim())
                 .gender(request.getGender())
                 .birthDate(request.getBirthDate())
+                .avatarUrl(avatarService.randomDefault(request.getGender()))
                 .preferences(defaultPreferencesFor(request.getGender()))
                 .verified(!verificationRequired)
                 .role(UserRole.ROLE_USER)
@@ -115,10 +117,13 @@ public class AuthService {
                         while (userRepository.existsByNicknameAndDeletedFalse(nick)) {
                             nick = baseNick + i++;
                         }
+                        String picture = (String) payload.get("picture");
                         return User.builder()
                                 .email(email)
                                 .googleId(googleId)
                                 .nickname(nick)
+                                .avatarUrl(picture != null && !picture.isBlank()
+                                        ? picture : avatarService.randomDefault(null))
                                 .verified(true)
                                 .role(UserRole.ROLE_USER)
                                 .active(true)

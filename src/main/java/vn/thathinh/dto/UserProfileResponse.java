@@ -28,4 +28,5 @@ public class UserProfileResponse {
     private String bio;
     private List<String> interests;
     private List<String> photos;
+    private boolean locationEnabled;
 }

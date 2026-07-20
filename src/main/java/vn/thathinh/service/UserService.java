@@ -23,6 +23,7 @@ public class UserService {
     private final TokenService tokenService;
     private final FileUploadService fileUploadService;
     private final NicknameValidator nicknameValidator;
+    private final AvatarService avatarService;
 
     public UserProfileResponse getProfile(String userId) {
         return toResponse(findUser(userId));
@@ -64,10 +65,44 @@ public class UserService {
         return toResponse(user);
     }
 
+    public UserProfileResponse updateLocation(String userId, vn.thathinh.dto.UpdateLocationRequest request) {
+        User user = findUser(userId);
+        // GeoJsonPoint nhận thứ tự (x=longitude, y=latitude).
+        user.setLocation(new org.springframework.data.mongodb.core.geo.GeoJsonPoint(
+                request.getLongitude(), request.getLatitude()));
+        user.setLocationEnabled(true);
+        user.setLocationUpdatedAt(java.time.Instant.now());
+        userRepository.save(user);
+        return toResponse(user);
+    }
+
+    public UserProfileResponse disableLocation(String userId) {
+        User user = findUser(userId);
+        user.setLocationEnabled(false);
+        user.setLocation(null);
+        userRepository.save(user);
+        return toResponse(user);
+    }
+
     public UserProfileResponse uploadAvatar(String userId, MultipartFile file) {
         User user = findUser(userId);
         String url = fileUploadService.uploadAvatar(userId, file);
         user.setAvatarUrl(url);
+        userRepository.save(user);
+        return toResponse(user);
+    }
+
+    public java.util.List<AvatarService.AvatarPreset> avatarPresets(String userId) {
+        User user = findUser(userId);
+        return avatarService.presets(user.getGender());
+    }
+
+    public UserProfileResponse chooseAvatarPreset(String userId, String seed) {
+        User user = findUser(userId);
+        if (!avatarService.isValidSeed(seed)) {
+            throw new BusinessException(ApiCode.VALIDATION_ERROR, "Avatar không hợp lệ");
+        }
+        user.setAvatarUrl(avatarService.buildUrl(user.getGender(), seed));
         userRepository.save(user);
         return toResponse(user);
     }
@@ -148,6 +183,7 @@ public class UserService {
                 .bio(user.getBio())
                 .interests(user.getInterests())
                 .photos(user.getPhotos())
+                .locationEnabled(user.isLocationEnabled())
                 .build();
     }
 

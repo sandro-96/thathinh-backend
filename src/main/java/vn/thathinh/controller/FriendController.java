@@ -38,6 +38,14 @@ public class FriendController {
         return ApiResponseDto.success(ApiCode.SUCCESS, friendService.listIncomingRequests(user.getUserId()));
     }
 
+    @PostMapping("/{partnerId}/request")
+    public ApiResponseDto<FriendRequestResponse> sendRequest(
+            @PathVariable String partnerId,
+            @AuthenticationPrincipal CustomUserDetails user) {
+        return ApiResponseDto.success(ApiCode.SUCCESS,
+                friendService.createRequest(user.getUserId(), partnerId, null));
+    }
+
     @PostMapping("/requests/{id}/accept")
     public ApiResponseDto<ConversationResponse> accept(
             @PathVariable String id,
