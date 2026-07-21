@@ -1,6 +1,8 @@
 package vn.thathinh.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,12 @@ public class NearbyController {
     @GetMapping
     public ApiResponseDto<List<NearbyUserResponse>> nearby(
             @AuthenticationPrincipal CustomUserDetails user,
-            @RequestParam(value = "radiusKm", required = false) Double radiusKm) {
+            @RequestParam(value = "radiusKm", required = false) Double radiusKm,
+            HttpServletResponse response) {
+        // Kết quả phụ thuộc vị trí thời gian thực & theo từng người dùng — không được cache
+        // ở trình duyệt hay proxy dùng chung.
+        response.setHeader(HttpHeaders.CACHE_CONTROL, "no-store, no-cache, must-revalidate, private");
+        response.setHeader(HttpHeaders.PRAGMA, "no-cache");
         return ApiResponseDto.success(ApiCode.SUCCESS, nearbyService.findNearby(user.getUserId(), radiusKm));
     }
 }
